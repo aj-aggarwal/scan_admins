@@ -21,4 +21,8 @@ use App\Http\Controllers\ScanCodesController;
 
 Route::post('/scan_code', [ScanCodesController::class, 'scanCode']);
 
+Route::middleware(['auth:api'])->group(function(){
+	Route::post('/user', [UsersController::class, 'store']);
+});
+
 
