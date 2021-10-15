@@ -18,18 +18,25 @@ class ScanCodesController extends Controller
     public function scanCode(Request $request)
     {
     	$request->validate([
-    		'qr_code' => 'required',
+			'qr_code' => 'required',
     	]);
+    	
     	$qrCode = $request->input('qr_code');
+
     	$getCode = $this->centerQrCode->where('qr_code', $qrCode)->first();
+
     	if($getCode){
     		$token = $getCode->createToken('Token Name')->accessToken;
+
     		return response()->json([
+    			'is_valid' => true,
     			'access_token' => $token
-    		]);
+    		], 200);
     	}
+
     	return response()->json([
-    		'message' => 'Invalid qr_code'
-    	]);
+    		'is_valid' => false,
+    		'error' => 'Invalid qr_code'
+    	], 412);
     }
 }
