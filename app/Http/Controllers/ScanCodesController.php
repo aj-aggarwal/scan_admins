@@ -26,7 +26,7 @@ class ScanCodesController extends Controller
     	$getCode = $this->centerQrCode->where('qr_code', $qrCode)->first();
 
     	if($getCode){
-    		$token = $getCode->createToken('Token Name')->accessToken;
+    		$token = $getCode->createToken('My Token')->accessToken;
 
     		return response()->json([
     			'is_valid' => true,
