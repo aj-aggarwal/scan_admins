@@ -15,22 +15,20 @@ class UsersController extends Controller
     		'address' => 'required'
     	]);
 
-    	$payload = $request->all();
-    	$payload['first_name'] = $payload['first_name']??'';
-    	$payload['last_name'] = $payload['lastname']??'';
-    	$payload['username'] = $payload['username']??'';
-    	$payload['password'] = $payload['password']??'';
-    	$payload['state_id'] = $payload['state_id']??1;
+        $user = User::where('mobile', $request->mobile)->first();
 
-    	if($user = User::where('email', $request->input('email'))->first()){
-    		return response()->json([
-    			'message' => 'User already exists'
-    		]);
-    	}
-    	User::create($payload);
+        if(!$user) {
+            $user = new User;
+        }
+    	$user->first_name = $request->first_name ?? '';
+    	$user->last_name = $request->lastname ?? '';
+    	$user->password = $request->password ?? '';
+    	$user->state_id = $request->state_id ?? 1;
+        
+        $user->save();
 
     	return response()->json([
-    		'message' => 'User created successfully'
+    		'message' => 'User data saved successfully'
     	]);
     }
 }
