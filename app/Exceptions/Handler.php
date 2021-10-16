@@ -37,5 +37,25 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+
+        $this->renderable(function (\Exception $e, $request) {
+            if ($request->is('api/*')) {
+                if($e instanceof \Illuminate\Auth\AuthenticationException) {
+                    return response()->json([
+                        'error' => $e->getMessage(),
+                    ], 401);
+                }
+
+                if($e instanceof \Illuminate\Validation\ValidationException) {
+                    return response()->json([
+                        'error' => $e->validator->getMessageBag(),
+                    ], 401);
+                }
+
+                return response()->json([
+                    'message' => $e->getMessage(),
+                ], 500);
+            }
+        });
     }
 }
