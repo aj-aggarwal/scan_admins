@@ -21,6 +21,7 @@ use App\Http\Controllers\UsersController;
 // });
 
 
+
 Route::middleware(['client'])->group(function(){
 	Route::post('/scan_code', [ScanCodesController::class, 'scanCode']);
 	Route::post('/user', [UsersController::class, 'store']);

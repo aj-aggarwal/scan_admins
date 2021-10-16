@@ -20,6 +20,7 @@ class UsersController extends Controller
         if(!$user) {
             $user = new User;
         }
+        
     	$user->first_name = $request->first_name ?? '';
     	$user->last_name = $request->lastname ?? '';
     	$user->password = $request->password ?? '';
