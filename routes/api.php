@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ScanCodesController;
+use App\Http\Controllers\UsersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,10 +20,10 @@ use App\Http\Controllers\ScanCodesController;
 //     return $request->user();
 // });
 
-Route::post('/scan_code', [ScanCodesController::class, 'scanCode']);
 
-Route::middleware(['auth:api'])->group(function(){
+
+Route::middleware(['client'])->group(function(){
+	Route::post('/scan_code', [ScanCodesController::class, 'scanCode']);
 	Route::post('/user', [UsersController::class, 'store']);
 });
-
 
